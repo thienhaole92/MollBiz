@@ -2,7 +2,7 @@ package com.client.haole.mollbiz.service.assist.assist
 
 import android.content.Context
 import com.client.haole.mollbiz.application.App
-import com.client.haole.mollbiz.service.impl.NetService
+import com.client.haole.mollbiz.service.api.NetService
 import com.client.haole.mollbiz.tools.Utils
 import okhttp3.Cache
 import okhttp3.CacheControl

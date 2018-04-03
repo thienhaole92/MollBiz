@@ -1,7 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/linear_layout_item_home"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content"
+    android:layout_marginLeft="2dp"
+    android:layout_marginRight="2dp"
+    android:layout_marginBottom="10dp"
+    android:layout_marginTop="10dp"
+    android:orientation="vertical"
+    android:background="#fff">
 
-</LinearLayout>
+    <LinearLayout
+        android:id="@+id/layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/text_view_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <ImageView
+            android:id="@+id/image_view_thumb"
+            android:layout_width="match_parent"
+            android:layout_height="200dp" />
+
+    </LinearLayout>
+
+</RelativeLayout>

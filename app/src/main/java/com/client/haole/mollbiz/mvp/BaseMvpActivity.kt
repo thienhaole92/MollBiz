@@ -24,6 +24,14 @@ abstract class BaseMvpActivity<in V : BaseMvpView, T : BaseMvpPresenter<V>>
         return this
     }
 
+    override fun showProgress() {
+
+    }
+
+    override fun hideProgress() {
+
+    }
+
     override fun showError(error: String) {
         Toast.makeText(this, error, Toast.LENGTH_LONG).show()
     }
