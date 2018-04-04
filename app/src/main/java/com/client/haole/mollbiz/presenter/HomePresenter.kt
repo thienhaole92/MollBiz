@@ -20,13 +20,11 @@ class HomePresenter : BaseMvpPresenterImpl<HomeContract.View>(), HomeContract.Pr
     override fun getAndroid(type: String, page: Int, pagesize: Int) {
         val subscriber = mAndMolApi.getAndroid(type, page, pagesize, object : NetSubscriber<JsonResult<MutableList<AndMol>>>(mView) {
             override fun onNext(t: JsonResult<MutableList<AndMol>>) {
-//                mView?.getDataFailed("")
-                // Khong hieu tai sao cho nay goi ham getDataFailed khong duoc
-                //Nhung o tren ham test lai goi duoc
+                mView?.getDataSuccess(t);
             }
 
             override fun onFailed(msg: String) {
-
+                mView?.getDataFailed(msg)
             }
         })
         mSubscription.add(subscriber)
