@@ -6,11 +6,11 @@ open class BaseMvpPresenterImpl<V : BaseMvpView> : BaseMvpPresenter<V> {
 
     protected var mView : V? = null
 
-    val mSubscription: CompositeDisposable by lazy {
+    override val mSubscription: CompositeDisposable by lazy {
         CompositeDisposable()
     }
 
-    open fun unSubscriber() {
+    override fun unSubscriber() {
         if (mSubscription.isDisposed) {
             mSubscription.dispose()
         }
