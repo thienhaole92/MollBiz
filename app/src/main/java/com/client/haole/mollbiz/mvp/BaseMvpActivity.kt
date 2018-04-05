@@ -3,7 +3,9 @@ package com.client.haole.mollbiz.mvp
 import android.content.Context
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
+import android.support.v7.widget.Toolbar
 import android.widget.Toast
+import com.client.haole.mollbiz.R
 
 abstract class BaseMvpActivity<in V : BaseMvpView, T : BaseMvpPresenter<V>>
     : AppCompatActivity(), BaseMvpView {
@@ -38,6 +40,13 @@ abstract class BaseMvpActivity<in V : BaseMvpView, T : BaseMvpPresenter<V>>
 
     override fun showMessage(message: String) {
         Toast.makeText(this, message, Toast.LENGTH_LONG).show()
+    }
+
+    fun setupToolbar(toolbar: Toolbar) {
+        toolbar.title = ""
+        toolbar.setNavigationIcon(R.drawable.icon_back_bla)
+        setSupportActionBar(toolbar)
+
     }
 
 }

@@ -1,6 +1,7 @@
 package com.client.haole.mollbiz.fragment
 
 import android.content.Context
+import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.support.v4.app.Fragment
@@ -13,6 +14,7 @@ import android.view.View
 import android.view.ViewGroup
 
 import com.client.haole.mollbiz.R
+import com.client.haole.mollbiz.activity.DetailsActivity
 import com.client.haole.mollbiz.adapter.HomeItemListAdapter
 import com.client.haole.mollbiz.application.App
 import com.client.haole.mollbiz.contract.HomeContract
@@ -65,7 +67,10 @@ class HomeFragment : BaseMvpFragment<HomeContract.View, HomePresenter>(), HomeCo
 
     private fun initView() {
         mListAdapter = HomeItemListAdapter(mLists, {
-
+            val intent = Intent()
+            intent.putExtra("url", mLists[it].url)
+            intent.setClass(context, DetailsActivity::class.java)
+            startActivity(intent)
         })
         val layoutManager = LinearLayoutManager(App.instance, LinearLayoutManager.VERTICAL, false)
         recycler_view_home.layoutManager = layoutManager

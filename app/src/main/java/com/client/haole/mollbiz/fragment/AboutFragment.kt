@@ -9,11 +9,15 @@ import android.view.View
 import android.view.ViewGroup
 
 import com.client.haole.mollbiz.R
+import com.client.haole.mollbiz.contract.AboutContract
 import com.client.haole.mollbiz.contract.ImageContract
+import com.client.haole.mollbiz.model.AndMol
+import com.client.haole.mollbiz.model.JsonResult
 import com.client.haole.mollbiz.mvp.BaseMvpFragment
+import com.client.haole.mollbiz.presenter.AboutPresenter
 import com.client.haole.mollbiz.presenter.ImagePresenter
 
-class AboutFragment : BaseMvpFragment<ImageContract.View, ImageContract.Presenter>(), ImageContract.View {
+class AboutFragment : BaseMvpFragment<AboutContract.View, AboutPresenter>(), AboutContract.View {
 
     companion object {
 
@@ -25,7 +29,7 @@ class AboutFragment : BaseMvpFragment<ImageContract.View, ImageContract.Presente
         }
     }
 
-    override var mPresenter: ImageContract.Presenter = ImagePresenter()
+    override var mPresenter = AboutPresenter()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
