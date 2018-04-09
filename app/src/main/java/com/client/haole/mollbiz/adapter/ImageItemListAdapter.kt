@@ -37,6 +37,7 @@ class ImageItemListAdapter(private val items: List<AndMol>, val onClick: (Int) -
                 Glide.with(App.instance)
                         .load(item.url)
                         .crossFade()
+                        .placeholder(R.color.gray)
                         .into(image_view_thumb)
 
             }

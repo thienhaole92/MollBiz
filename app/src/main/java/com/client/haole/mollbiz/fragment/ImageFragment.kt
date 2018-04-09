@@ -4,7 +4,10 @@ import android.content.Context
 import android.net.Uri
 import android.os.Bundle
 import android.support.v4.app.Fragment
+import android.support.v4.widget.SwipeRefreshLayout
 import android.support.v7.widget.GridLayoutManager
+import android.support.v7.widget.LinearLayoutManager
+import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -19,7 +22,8 @@ import com.client.haole.mollbiz.presenter.ImagePresenter
 import kotlinx.android.synthetic.main.fragment_image.*
 
 
-class ImageFragment : BaseMvpFragment<ImageContract.View, ImagePresenter>(), ImageContract.View {
+class ImageFragment : BaseMvpFragment<ImageContract.View, ImagePresenter>(), ImageContract.View,
+SwipeRefreshLayout.OnRefreshListener {
 
 
     companion object {
@@ -36,7 +40,8 @@ class ImageFragment : BaseMvpFragment<ImageContract.View, ImagePresenter>(), Ima
 
     override var mPresenter = ImagePresenter()
     private var mPage = 1
-    private val mPageSize = 30
+    private val mPageSize = 20
+    private var mIsRefresh = false
     private val mLists: MutableList<AndMol> by lazy {
         mutableListOf<AndMol>()
     }
@@ -58,7 +63,13 @@ class ImageFragment : BaseMvpFragment<ImageContract.View, ImagePresenter>(), Ima
     }
 
     override fun getDataSuccess(ands: JsonResult<MutableList<AndMol>>) {
-        mLists.clear()
+        if (mIsRefresh) {
+            mIsRefresh = false
+            refresh_layout_image.isRefreshing = false
+            if (mLists.size > 0) {
+                mLists.clear()
+            }
+        }
         mLists.addAll(ands.results)
         mListAdapter!!.notifyDataSetChanged()
     }
@@ -74,10 +85,34 @@ class ImageFragment : BaseMvpFragment<ImageContract.View, ImagePresenter>(), Ima
         val layoutManager = GridLayoutManager(activity, 2)
         recycler_view_image.layoutManager = layoutManager
         recycler_view_image.adapter = mListAdapter
+
+        refresh_layout_image.setColorSchemeResources(R.color.about)
+        refresh_layout_image.setOnRefreshListener(this)
+        recycler_view_image.addOnScrollListener(object: RecyclerView.OnScrollListener() {
+            override fun onScrollStateChanged(recyclerView: RecyclerView?, newState: Int) {
+                super.onScrollStateChanged(recyclerView, newState)
+                val layoutManager: LinearLayoutManager = recyclerView?.layoutManager as LinearLayoutManager
+                val lastPosition = layoutManager.findLastVisibleItemPosition()
+                if (newState == RecyclerView.SCROLL_STATE_IDLE && lastPosition == mLists.size - 1) {
+                    if (!mIsRefresh) {
+                        mPage++
+                        getImages()
+                    }
+                }
+            }
+        })
     }
 
     private fun getImages() {
         mPresenter.getAndroid(GIRL, mPageSize, mPage)
+    }
+
+    override fun onRefresh() {
+        if (!mIsRefresh) {
+            mIsRefresh = true
+            mPage = 1
+            getImages()
+        }
     }
 
 }
