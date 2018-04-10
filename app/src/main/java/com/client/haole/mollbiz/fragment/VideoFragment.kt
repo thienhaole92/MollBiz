@@ -1,6 +1,7 @@
 package com.client.haole.mollbiz.fragment
 
 import android.content.Context
+import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
@@ -11,6 +12,7 @@ import android.view.View
 import android.view.ViewGroup
 
 import com.client.haole.mollbiz.R
+import com.client.haole.mollbiz.activity.VideoMoreActivity
 import com.client.haole.mollbiz.adapter.VideoItemListAdapter
 import com.client.haole.mollbiz.application.App
 import com.client.haole.mollbiz.contract.VideoContract
@@ -36,7 +38,8 @@ class VideoFragment : BaseMvpFragment<VideoContract.View, VideoPresenter>(), Vid
     }
 
     override var mPresenter: VideoPresenter = VideoPresenter()
-
+    private var mPage = 1
+    private var mPageSize = 10
     private var mListAdapter: VideoItemListAdapter? = null
     private val mList: MutableList<VideoMol> by lazy {
         mutableListOf<VideoMol>()
@@ -68,7 +71,11 @@ class VideoFragment : BaseMvpFragment<VideoContract.View, VideoPresenter>(), Vid
 
     private fun initView() {
         mListAdapter = VideoItemListAdapter(mList, {
-
+            val intent = Intent()
+            val name = mList[it].name
+            intent.putExtra("name", name)
+            intent.setClass(context, VideoMoreActivity::class.java)
+            startActivity(intent)
         })
         val layoutManager = GridLayoutManager(App.instance, 2)
         recycler_view_video.layoutManager = layoutManager
