@@ -11,6 +11,7 @@ import kotlinx.android.synthetic.main.activity_video_more.*
 
 class VideoMoreActivity : BaseMvpActivity<VideoMoreContract.View, VideoMorePresenter>(), VideoMoreContract.View {
 
+    private var mIsRefresh = false
     override var mPresenter = VideoMorePresenter()
 
     override fun onCreate(savedInstanceState: Bundle?) {
